@@ -1,5 +1,9 @@
 import sys
 import os.path
+import log_server
+import threading
+
+
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtUiTools import QUiLoader
 
@@ -19,5 +23,8 @@ class MainWindow(QtWidgets.QMainWindow):
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
+    server = threading.Thread(target=log_server.RunServer)
+    server.start()
     window.show()
     sys.exit(app.exec_())
+    server.join()
