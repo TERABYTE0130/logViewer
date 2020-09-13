@@ -1,30 +1,31 @@
-import socket
-
-LISTEN_NUM = 5
-IP         = "127.0.0.1"
-PORT       = 10001
-
-class Server:
-    def __init__(self,ip: str,port: int):
-        self.ip     = ip
-        self.port   = port
-        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    def Run(self):
-        self.server.bind((self.ip, self.port))
-        self.server.listen(LISTEN_NUM)
-        print("run server!!")
-        while True:
-            client, address = self.server.accept()
-            print("connected!! {}",format(address))
-
-            data = client.recv(1024)
-            print(data)
-
-            client.send("ok")
-            client.close()
+from PySide2.QtCore import (Signal, QByteArray, QDataStream, QIODevice, QThread, Qt)
+from PySide2.QtNetwork import (QHostAddress, QNetworkInterface, QTcpServer, QTcpSocket)
 
 
-def RunServer():
-    server = Server(IP,PORT)
-    server.Run()
+class LogThread(QThread):
+    error = Signal(QTcpSocket.SocketError)
+
+    def __init__(self, socket_desc, parent):
+        super(LogThread,self).__init__(parent)
+        self.socket_desc = socket_desc
+
+    def returnResponce(msg:str)
+
+
+    def run(self):
+        tcp_socket = QTcpSocket()
+        #socket生成
+        if not tcp_socket.setSocketDescriptor(self.socket_desc):
+            self.error.emit(tcp_socket.error())
+            print("faild create socket")
+            return
+        print("connected!!")
+
+
+class Server(QTcpServer):
+    def incomingConnection(self, socket_desc):
+        print("connect begin")
+        thread = LogThread(socket_desc, self)
+        # 終了をトリガーして破棄する
+        thread.finished.connect(thread.deleteLater)
+        thread.start()
