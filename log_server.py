@@ -3,7 +3,7 @@ from PySide2.QtCore import (QObject, Signal, QByteArray, QDataStream, QIODevice,
 from PySide2.QtNetwork import (QHostAddress, QNetworkInterface, QTcpServer, QTcpSocket)
 
 class StringSignal(QObject):
-    logging_signal = Signal((str,))
+    logging_signal = Signal(str)
 
 class LogThread(QThread):
     error = Signal(QTcpSocket.SocketError)
