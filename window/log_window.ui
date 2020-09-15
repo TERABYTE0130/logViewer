@@ -25,6 +25,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTreeView" name="CategoryView">
     <property name="geometry">
@@ -35,6 +38,11 @@
       <height>431</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+     </font>
+    </property>
    </widget>
    <widget class="QPlainTextEdit" name="DebugInputText">
     <property name="geometry">
@@ -44,6 +52,11 @@
       <width>261</width>
       <height>211</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+     </font>
     </property>
     <property name="plainText">
      <string>{
@@ -58,8 +71,13 @@
       <x>570</x>
       <y>50</y>
       <width>351</width>
-      <height>23</height>
+      <height>41</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+     </font>
     </property>
     <property name="text">
      <string>push log</string>
@@ -73,6 +91,11 @@
       <width>631</width>
       <height>201</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+     </font>
     </property>
    </widget>
   </widget>

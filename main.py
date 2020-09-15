@@ -5,6 +5,10 @@ from PySide2.QtWidgets import QMessageBox
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtNetwork import (QHostAddress, QNetworkInterface)
 from PySide2.QtCore import (Signal, Slot)
+
+from pyside_material import apply_stylesheet
+
+
 import log_server
 
 CURRENT_PATH = os.path.dirname(os.path.join(os.path.abspath(sys.argv[0])))
@@ -36,6 +40,10 @@ class MainWindow(QtWidgets.QMainWindow):
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
+
+    #apply materialdesign
+    apply_stylesheet(app, theme="dark_teal.xml")
+
     window.startLogServer(SERVER_IP, SERVER_PORT)
     window.show()
     sys.exit(app.exec_())
