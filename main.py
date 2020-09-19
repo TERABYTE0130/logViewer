@@ -23,10 +23,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "window", "log_window.ui"))
         self.setCentralWidget(self.ui)
 
-        # window class create
-        self.log_view = log_window.LogWindow(self.ui.LogView)
-
-
 def TestEvent(data):
     print(data)
 
@@ -38,6 +34,8 @@ def BeginLogServer(server, address, port):
         server.close()
         return
 
+
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
@@ -46,6 +44,12 @@ if __name__ == "__main__":
 
     server = log_server.Server()
     BeginLogServer(server, SERVER_IP, SERVER_PORT)
+
+    log_view = log_window.LogWindow(window.ui.LogView)
+
+    event_dispatcher.StartupDispatcher()
+
+    event_dispatcher.AddEvent("log.recv",log_view.AppendDataToWindow)
     window.show()
-    event_dispatcher.InitDispatcher()
     sys.exit(app.exec_())
+

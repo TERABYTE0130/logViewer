@@ -16,9 +16,8 @@ class EventDispatcher():
 dispatcher = EventDispatcher()
 
 
-def InitDispatcher():
+def StartupDispatcher():
     print("start dispatcher")
-
 
 def AddEvent(key: str, event):
     dispatcher.AddEvent(key, event)
