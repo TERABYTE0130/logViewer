@@ -2,12 +2,11 @@ from PySide2.QtCore import (QObject, Signal, QThread, QByteArray, QDataStream, Q
 from PySide2.QtNetwork import (QHostAddress, QNetworkInterface, QTcpServer, QTcpSocket)
 
 class Server(QTcpServer):
-    def __init__(self, log_slot):
+    def __init__(self):
         super(Server, self).__init__()
-        self.log_slot = log_slot
         self.socket = QTcpSocket()
 
-    def readBuf(self):
+    def ReadBuf(self):
         data = self.socket.readAll()
         utf_str = data.data().decode()
         print(utf_str)
@@ -17,4 +16,4 @@ class Server(QTcpServer):
             self.error.emit(self.socket.error())
             print("faild create socket")
             return
-        self.socket.readyRead.connect(self.readBuf)
+        self.socket.readyRead.connect(self.ReadBuf)

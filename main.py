@@ -1,15 +1,15 @@
 import sys
 import os.path
-from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2 import QtWidgets
 from PySide2.QtWidgets import QMessageBox
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtNetwork import (QHostAddress, QNetworkInterface)
-from PySide2.QtCore import (Signal, Slot)
+from PySide2.QtNetwork import (QHostAddress)
 
 from pyside_material import apply_stylesheet
 
-
 import log_server
+import log_window
+import event_dispatcher
 
 CURRENT_PATH = os.path.dirname(os.path.join(os.path.abspath(sys.argv[0])))
 SERVER_IP = QHostAddress(QHostAddress.LocalHost)
@@ -22,28 +22,30 @@ class MainWindow(QtWidgets.QMainWindow):
         # load window
         self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "window", "log_window.ui"))
         self.setCentralWidget(self.ui)
-        # init server
-        self.server = log_server.Server(self.connected)
 
-    def startLogServer(self, address, port):
-        print("begin listen ", (address.toString()))
-        if not self.server.listen(address, port):
-            QMessageBox.critical(self, "logserver", "unable to start server")
-            self.close()
-            return
+        # window class create
+        self.log_view = log_window.LogWindow(self.ui.LogView)
 
-    # @QtCore.Slot(str)
-    def connected(self, msg):
-        print(msg)
 
+def TestEvent(data):
+    print(data)
+
+
+def BeginLogServer(server, address, port):
+    print("begin listen ", (address.toString()))
+    if not server.listen(address, port):
+        QMessageBox.critical("logserver", "unable to start server")
+        server.close()
+        return
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
-
-    #apply materialdesign
+    # apply materialdesign
     apply_stylesheet(app, theme="dark_teal.xml")
 
-    window.startLogServer(SERVER_IP, SERVER_PORT)
+    server = log_server.Server()
+    BeginLogServer(server, SERVER_IP, SERVER_PORT)
     window.show()
+    event_dispatcher.InitDispatcher()
     sys.exit(app.exec_())
