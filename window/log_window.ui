@@ -89,7 +89,7 @@
      <rect>
       <x>830</x>
       <y>60</y>
-      <width>91</width>
+      <width>111</width>
       <height>31</height>
      </rect>
     </property>
@@ -97,47 +97,15 @@
      <string>Search</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="LogView">
+   <widget class="QTextEdit" name="LogView">
     <property name="geometry">
      <rect>
       <x>280</x>
       <y>120</y>
-      <width>641</width>
+      <width>661</width>
       <height>371</height>
      </rect>
     </property>
-    <property name="minimumSize">
-     <size>
-      <width>641</width>
-      <height>0</height>
-     </size>
-    </property>
-    <attribute name="horizontalHeaderMinimumSectionSize">
-     <number>80</number>
-    </attribute>
-    <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>80</number>
-    </attribute>
-    <column>
-     <property name="text">
-      <string>Line</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Type</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Category</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Log</string>
-     </property>
-    </column>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

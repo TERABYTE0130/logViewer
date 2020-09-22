@@ -1,22 +1,25 @@
-from PySide2.QtWidgets import QTableWidget, QTableWidgetItem
+from PySide2.QtWidgets import QTextEdit
 import json
 
 class LogWindow():
-    def __init__(self, table_widget: QTableWidget):
+    def __init__(self, window: QTextEdit):
         self.display_data = []
-        print(table_widget.width())
-        self.table_widget = table_widget
-        self.AdjustWindowSize()
+        self.text_window = window
+        #self.AdjustWindowSize()
 
-    def AdjustWindowSize(self):
-        self.table_widget.horizontalHeader().setStretchLastSection(True)
+    #def AdjustWindowSize(self):
+    #    self.table_widget.horizontalHeader().setStretchLastSection(True)
 
     def AppendDataToWindow(self, data: str):
         #convert dict from json string
         log_dict = json.loads(data)
-        insert = QTableWidgetItem()
-        i
-        print(log_dict)
+        format_text = "{} | {} | {} | {}".format(
+            log_dict["timestamp"],
+            log_dict["loglevel"],
+            log_dict["category"],
+            log_dict["message"])
+        self.display_data.append(format_text)
+        self.text_window.append(format_text)
 
     def Clear(self):
         self.display_data.clear()
