@@ -9,6 +9,7 @@ class Server(QTcpServer):
         super(Server, self).__init__()
         self.socket = QTcpSocket()
         self.socket.readyRead.connect(self.ReadRecvData)
+        self.socket.disconnected.connect(self.DisconnectSocket)
 
     def ReadRecvData(self):
         data = self.socket.readAll()
@@ -20,4 +21,7 @@ class Server(QTcpServer):
             self.error.emit(self.socket.error())
             print("faild create socket")
             return
+        event_dispatcher.EmitEvent(event_key._CONNECT_CLIENT, "null")
 
+    def DisconnectSocket(self):
+        event_dispatcher.EmitEvent(event_key._DISCONNECT_CLIENT, "null")

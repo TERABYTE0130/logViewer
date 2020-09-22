@@ -113,14 +113,27 @@
    <widget class="QCheckBox" name="AutoScrollBox">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>850</x>
       <y>60</y>
-      <width>111</width>
+      <width>81</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>自動でスクロール</string>
+     <string>auto scroll</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="ConnectView">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>60</y>
+      <width>91</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>wait connect...</string>
     </property>
    </widget>
   </widget>

@@ -1,6 +1,12 @@
 from PySide2.QtWidgets import QTextEdit
 import json
 
+_LOG_TYPE = [
+    "[  INFO  ]",
+    "[  WARNING  ]",
+    "[  ERROR  ]"
+]
+
 
 class LogWindow():
     def __init__(self, window: QTextEdit):
@@ -18,7 +24,7 @@ class LogWindow():
         log_dict = json.loads(data)
         format_text = "{} | {} | {} | {}".format(
             log_dict["timestamp"],
-            log_dict["loglevel"],
+            _LOG_TYPE[log_dict["loglevel"]],
             log_dict["category"],
             log_dict["message"])
         self.display_data.append(format_text)

@@ -12,6 +12,7 @@ import log_window
 import log_filter_box
 import event_dispatcher
 import event_key
+import connect_state
 
 CURRENT_PATH = os.path.dirname(os.path.join(os.path.abspath(sys.argv[0])))
 SERVER_IP = QHostAddress(QHostAddress.LocalHost)
@@ -41,7 +42,13 @@ def RegisterLogEventToDispatcher(log_view: log_window.LogWindow,
     # auto acroll
     event_dispatcher.AddEvent(event_key._AUTO_SCROLL_LOG, log_view.SetAutoScrollFlg)
     # change type filter
-    event_dispatcher.AddEvent(event_key._TYPE_FILER_CHANGED,log_view.ChangeLogCategory)
+    event_dispatcher.AddEvent(event_key._TYPE_FILER_CHANGED, log_view.ChangeLogCategory)
+
+
+def RegisterConnectEvent(connect_view: connect_state.ConnectState):
+    event_dispatcher.AddEvent(event_key._CONNECT_CLIENT, connect_view.ConnectClient)
+    event_dispatcher.AddEvent(event_key._DISCONNECT_CLIENT, connect_view.DisconnectClient)
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
@@ -58,9 +65,12 @@ if __name__ == "__main__":
         window.ui.AutoScrollBox,
         window.ui.TypeFilterBox)
 
+    connect_view = connect_state.ConnectState(window.ui.ConnectView)
+
     # init event dispatcher
     event_dispatcher.StartupDispatcher()
-    RegisterLogEventToDispatcher(log_view,log_filter_utility)
+    RegisterLogEventToDispatcher(log_view, log_filter_utility)
+    RegisterConnectEvent(connect_view)
     # execute app
     window.show()
     sys.exit(app.exec_())
