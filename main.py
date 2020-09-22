@@ -25,33 +25,33 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(self.ui)
 
 
-def BeginLogServer(server, address, port):
+def BeginLogServer(server, address, port) -> None:
     print("begin listen ", (address.toString()))
     if not server.listen(address, port):
         QMessageBox.critical("logserver", "unable to start server")
         server.close()
         return
 
-def RegisterLogEventToDispatcher(log_view):
-    #Log受信
-    event_dispatcher.AddEvent(event_key._RECV_LOG, log_view.AppendDataToWindow)
 
+def RegisterLogEventToDispatcher(log_view) -> None:
+    # Log受信
+    event_dispatcher.AddEvent(event_key._RECV_LOG, log_view.AppendDataToWindow)
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     # apply materialdesign
-    #apply_stylesheet(app, theme="dark_blue.xml")
+    # apply_stylesheet(app, theme="dark_blue.xml")
 
     server = log_server.Server()
     BeginLogServer(server, SERVER_IP, SERVER_PORT)
 
     log_view = log_window.LogWindow(window.ui.LogView)
 
-    #init event dispatcher
+    # init event dispatcher
     event_dispatcher.StartupDispatcher()
     RegisterLogEventToDispatcher(log_view)
-    #execute app
+    # execute app
     window.show()
     sys.exit(app.exec_())
