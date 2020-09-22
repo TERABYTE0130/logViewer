@@ -9,6 +9,7 @@ from pyside_material import apply_stylesheet
 
 import log_server
 import log_window
+import log_filter_box
 import event_dispatcher
 import event_key
 
@@ -33,15 +34,18 @@ def BeginLogServer(server, address, port) -> None:
         return
 
 
-def RegisterLogEventToDispatcher(log_view) -> None:
+def RegisterLogEventToDispatcher(log_view: log_window.LogWindow,
+                                 log_filter_utility: log_filter_box.LogFilterBox) -> None:
     # Log受信
     event_dispatcher.AddEvent(event_key._RECV_LOG, log_view.AppendDataToWindow)
+    # Auto Scroll
+    event_dispatcher.AddEvent(event_key._AUTO_SCROLL_LOG, log_view.SetAutoScrollFlg)
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
-    # apply materialdesign
+    # apply material design
     # apply_stylesheet(app, theme="dark_blue.xml")
 
     server = log_server.Server()
@@ -49,9 +53,11 @@ if __name__ == "__main__":
 
     log_view = log_window.LogWindow(window.ui.LogView)
 
+    log_filter_utility = log_filter_box.LogFilterBox(window.ui.AutoScrollBox)
+
     # init event dispatcher
     event_dispatcher.StartupDispatcher()
-    RegisterLogEventToDispatcher(log_view)
+    RegisterLogEventToDispatcher(log_view,log_filter_utility)
     # execute app
     window.show()
     sys.exit(app.exec_())

@@ -6,7 +6,7 @@ class LogWindow():
     def __init__(self, window: QTextEdit):
         self.display_data = []
         self.text_window = window
-        self.auto_scroll = True
+        self.auto_scroll = False
         # self.AdjustWindowSize()
 
     # def AdjustWindowSize(self):
@@ -22,8 +22,11 @@ class LogWindow():
             log_dict["message"])
         self.display_data.append(format_text)
         self.text_window.append(format_text)
-        if self.auto_scroll:
-            self.ScrollToEnd()
+        # if self.auto_scroll:
+        #    self.ScrollToEnd()
+
+    def SetAutoScrollFlg(self, flg: bool):
+        self.auto_scroll = flg
 
     def ScrollToEnd(self) -> None:
         scroll = self.text_window.verticalScrollBar()
