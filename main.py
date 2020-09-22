@@ -36,11 +36,12 @@ def BeginLogServer(server, address, port) -> None:
 
 def RegisterLogEventToDispatcher(log_view: log_window.LogWindow,
                                  log_filter_utility: log_filter_box.LogFilterBox) -> None:
-    # Log受信
+    # recv log
     event_dispatcher.AddEvent(event_key._RECV_LOG, log_view.AppendDataToWindow)
-    # Auto Scroll
+    # auto acroll
     event_dispatcher.AddEvent(event_key._AUTO_SCROLL_LOG, log_view.SetAutoScrollFlg)
-
+    # change type filter
+    event_dispatcher.AddEvent(event_key._TYPE_FILER_CHANGED,log_view.ChangeLogCategory)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
@@ -53,7 +54,9 @@ if __name__ == "__main__":
 
     log_view = log_window.LogWindow(window.ui.LogView)
 
-    log_filter_utility = log_filter_box.LogFilterBox(window.ui.AutoScrollBox)
+    log_filter_utility = log_filter_box.LogFilterBox(
+        window.ui.AutoScrollBox,
+        window.ui.TypeFilterBox)
 
     # init event dispatcher
     event_dispatcher.StartupDispatcher()

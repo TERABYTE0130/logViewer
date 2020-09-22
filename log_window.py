@@ -12,6 +12,7 @@ class LogWindow():
     # def AdjustWindowSize(self):
     #    self.table_widget.horizontalHeader().setStretchLastSection(True)
 
+    # @Event
     def AppendDataToWindow(self, data: str) -> None:
         # convert dict from json string
         log_dict = json.loads(data)
@@ -25,12 +26,16 @@ class LogWindow():
         # if self.auto_scroll:
         #    self.ScrollToEnd()
 
+    # @Event
     def SetAutoScrollFlg(self, flg: bool):
         self.auto_scroll = flg
 
     def ScrollToEnd(self) -> None:
         scroll = self.text_window.verticalScrollBar()
         scroll.setValue(scroll.maximum())
+
+    def ChangeLogCategory(self, type: int):
+        print(type)
 
     def Clear(self) -> None:
         self.display_data.clear()
