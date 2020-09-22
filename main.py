@@ -10,6 +10,7 @@ from pyside_material import apply_stylesheet
 import log_server
 import log_window
 import event_dispatcher
+import event_key
 
 CURRENT_PATH = os.path.dirname(os.path.join(os.path.abspath(sys.argv[0])))
 SERVER_IP = QHostAddress(QHostAddress.LocalHost)
@@ -23,9 +24,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "window", "log_window.ui"))
         self.setCentralWidget(self.ui)
 
-def TestEvent(data):
-    print(data)
-
 
 def BeginLogServer(server, address, port):
     print("begin listen ", (address.toString()))
@@ -34,22 +32,26 @@ def BeginLogServer(server, address, port):
         server.close()
         return
 
+def RegisterLogEventToDispatcher(log_view):
+    #Log受信
+    event_dispatcher.AddEvent(event_key._RECV_LOG, log_view.AppendDataToWindow)
+
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     # apply materialdesign
-    apply_stylesheet(app, theme="dark_teal.xml")
+    #apply_stylesheet(app, theme="dark_blue.xml")
 
     server = log_server.Server()
     BeginLogServer(server, SERVER_IP, SERVER_PORT)
 
     log_view = log_window.LogWindow(window.ui.LogView)
 
+    #init event dispatcher
     event_dispatcher.StartupDispatcher()
-
-    event_dispatcher.AddEvent("log.recv",log_view.AppendDataToWindow)
+    RegisterLogEventToDispatcher(log_view)
+    #execute app
     window.show()
     sys.exit(app.exec_())
-

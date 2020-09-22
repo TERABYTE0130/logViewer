@@ -32,10 +32,10 @@
    <widget class="QTreeView" name="CategoryView">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>50</y>
-      <width>241</width>
-      <height>431</height>
+      <x>10</x>
+      <y>30</y>
+      <width>231</width>
+      <height>461</height>
      </rect>
     </property>
     <property name="font">
@@ -44,22 +44,103 @@
      </font>
     </property>
    </widget>
-   <widget class="QTextEdit" name="LogView">
+   <widget class="QComboBox" name="TypeFilterBox">
     <property name="geometry">
      <rect>
-      <x>293</x>
-      <y>150</y>
-      <width>631</width>
-      <height>331</height>
+      <x>280</x>
+      <y>60</y>
+      <width>111</width>
+      <height>31</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Segoe UI</family>
-     </font>
+    <item>
+     <property name="text">
+      <string>all</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>info</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>warning</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>error</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLineEdit" name="SearchBox">
+    <property name="geometry">
+     <rect>
+      <x>410</x>
+      <y>60</y>
+      <width>411</width>
+      <height>31</height>
+     </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="SearchButton">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>60</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Search</string>
+    </property>
+   </widget>
+   <widget class="QTableWidget" name="LogView">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>120</y>
+      <width>641</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>641</width>
+      <height>0</height>
+     </size>
+    </property>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>80</number>
+    </attribute>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>80</number>
+    </attribute>
+    <column>
+     <property name="text">
+      <string>Line</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Type</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Category</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Log</string>
+     </property>
+    </column>
+   </widget>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
@@ -70,7 +151,6 @@
     </rect>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
