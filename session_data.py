@@ -1,14 +1,20 @@
+from PySide2.QtWidgets import QFileDialog
 import json
 
-class SessionLogData():
+class SessionLog():
     def __init__(self):
         self.log_data = []
 
-    def AddLog(self, data):
-        self.log_raw_data.append(data)
+    def Add(self, data):
+        self.log_data.append(data)
 
-    def ClearLog(self):
+    def Clear(self):
         self.log_data.clear()
 
+    def Savesettion(self):
+        save_file = QFileDialog.getSaveFileName(None,"save as","*.log")
+        data = json.dumps(self.log_data)
+        fw = open(save_file[0],"w")
+        json.dump(data,fw)
 
 

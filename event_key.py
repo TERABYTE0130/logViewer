@@ -1,6 +1,7 @@
 # log event
-_RECV_LOG = "log.recv"
-_AUTO_SCROLL_LOG = "log.autoscroll"
-_TYPE_FILER_CHANGED = "log.category_filter"
-_CONNECT_CLIENT = "net.connect"
-_DISCONNECT_CLIENT = "net.disconnect"
+RECV_LOG = "log.recv"
+AUTO_SCROLL_LOG = "log.autoscroll"
+TYPE_FILER_CHANGED = "log.category_filter"
+
+CONNECT_CLIENT = "net.connect"
+DISCONNECT_CLIENT = "net.disconnect"

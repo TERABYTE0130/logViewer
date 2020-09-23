@@ -7,7 +7,6 @@ _LOG_TYPE = [
     "[  ERROR  ]"
 ]
 
-
 class LogWindow():
     def __init__(self, window: QTextEdit):
         self.display_data = []
@@ -19,28 +18,28 @@ class LogWindow():
     #    self.table_widget.horizontalHeader().setStretchLastSection(True)
 
     # @Event
-    def AppendDataToWindow(self, data: str) -> None:
+    def AppendDataToWindow(self, json_data) -> None:
         # convert dict from json string
-        log_dict = json.loads(data)
+
         format_text = "{} | {} | {} | {}".format(
-            log_dict["timestamp"],
-            _LOG_TYPE[log_dict["loglevel"]],
-            log_dict["category"],
-            log_dict["message"])
+            json_data["timestamp"],
+            _LOG_TYPE[json_data["loglevel"]],
+            json_data["category"],
+            json_data["message"])
         self.display_data.append(format_text)
         self.text_window.append(format_text)
         # if self.auto_scroll:
         #    self.ScrollToEnd()
 
     # @Event
-    def SetAutoScrollFlg(self, flg: bool):
+    def SetAutoScrollFlg(self, flg: bool)->None:
         self.auto_scroll = flg
 
     def ScrollToEnd(self) -> None:
         scroll = self.text_window.verticalScrollBar()
         scroll.setValue(scroll.maximum())
 
-    def ChangeLogCategory(self, type: int):
+    def ChangeLogType(self, type: int)->None:
         print(type)
 
     def Clear(self) -> None:

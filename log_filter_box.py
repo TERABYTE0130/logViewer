@@ -14,11 +14,11 @@ class LogFilterBox():
         self.current_filter = 0
         self.type_filter.currentIndexChanged.connect(self.ChangeTypeFilter)
 
-    def ChangeTypeFilter(self,state : int):
+    def ChangeTypeFilter(self, state: int):
         self.current_filter = state
-        event_dispatcher.EmitEvent(event_key._TYPE_FILER_CHANGED,self.current_filter)
+        event_dispatcher.EmitEvent(event_key.TYPE_FILER_CHANGED, self.current_filter)
 
     def ClickedAutoScrollBox(self, state: int):
         self.is_auto_scroll = True if (state > 0) else False
         # dispatch event
-        event_dispatcher.EmitEvent(event_key._AUTO_SCROLL_LOG, self.is_auto_scroll)
+        event_dispatcher.EmitEvent(event_key.AUTO_SCROLL_LOG, self.is_auto_scroll)

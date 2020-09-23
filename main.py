@@ -1,7 +1,7 @@
 import sys
 import os.path
 from PySide2 import QtWidgets
-from PySide2.QtWidgets import QMessageBox
+from PySide2.QtWidgets import QMessageBox, QMenu
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtNetwork import (QHostAddress)
 
@@ -13,6 +13,7 @@ import log_filter_box
 import event_dispatcher
 import event_key
 import connect_state
+import session_data
 
 CURRENT_PATH = os.path.dirname(os.path.join(os.path.abspath(sys.argv[0])))
 SERVER_IP = QHostAddress(QHostAddress.LocalHost)
@@ -35,41 +36,55 @@ def BeginLogServer(server, address, port) -> None:
         return
 
 
-def RegisterLogEventToDispatcher(log_view: log_window.LogWindow,
+def RegisterLogEventToDispatcher(session_log: session_data.SessionLog,
+                                 log_view: log_window.LogWindow,
                                  log_filter_utility: log_filter_box.LogFilterBox) -> None:
     # recv log
-    event_dispatcher.AddEvent(event_key._RECV_LOG, log_view.AppendDataToWindow)
+    event_dispatcher.AddEvent(event_key.RECV_LOG, session_log.Add)
+    event_dispatcher.AddEvent(event_key.RECV_LOG, log_view.AppendDataToWindow)
     # auto acroll
-    event_dispatcher.AddEvent(event_key._AUTO_SCROLL_LOG, log_view.SetAutoScrollFlg)
+    event_dispatcher.AddEvent(event_key.AUTO_SCROLL_LOG, log_view.SetAutoScrollFlg)
     # change type filter
-    event_dispatcher.AddEvent(event_key._TYPE_FILER_CHANGED, log_view.ChangeLogCategory)
+    event_dispatcher.AddEvent(event_key.TYPE_FILER_CHANGED, log_view.ChangeLogType)
 
 
 def RegisterConnectEvent(connect_view: connect_state.ConnectState):
-    event_dispatcher.AddEvent(event_key._CONNECT_CLIENT, connect_view.ConnectClient)
-    event_dispatcher.AddEvent(event_key._DISCONNECT_CLIENT, connect_view.DisconnectClient)
+    event_dispatcher.AddEvent(event_key.CONNECT_CLIENT, connect_view.ConnectClient)
+    event_dispatcher.AddEvent(event_key.DISCONNECT_CLIENT, connect_view.DisconnectClient)
+
+def CreateMenuBar(
+        file_menu_bar: QMenu,
+        session_log: session_data.SessionLog):
+    file_menu_bar.addAction("Save as", session_log.Savesettion)
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    # init event dispatcher
+    event_dispatcher.StartupDispatcher()
+
     window = MainWindow()
     # apply material design
     # apply_stylesheet(app, theme="dark_blue.xml")
 
+    # session log
+    session_log = session_data.SessionLog()
     server = log_server.Server()
     BeginLogServer(server, SERVER_IP, SERVER_PORT)
 
+    # log view
     log_view = log_window.LogWindow(window.ui.LogView)
-
     log_filter_utility = log_filter_box.LogFilterBox(
         window.ui.AutoScrollBox,
         window.ui.TypeFilterBox)
 
+    # session connect state view
     connect_view = connect_state.ConnectState(window.ui.ConnectView)
 
-    # init event dispatcher
-    event_dispatcher.StartupDispatcher()
-    RegisterLogEventToDispatcher(log_view, log_filter_utility)
+    file_menu = window.ui.menuFile
+    CreateMenuBar(file_menu, session_log)
+
+    RegisterLogEventToDispatcher(session_log, log_view, log_filter_utility)
     RegisterConnectEvent(connect_view)
     # execute app
     window.show()
