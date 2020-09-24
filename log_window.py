@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QTextEdit
+from PySide2.QtWidgets import QTextBrowser
 import json
 
 _LOG_TYPE = [
@@ -7,8 +7,9 @@ _LOG_TYPE = [
     "[  ERROR  ]"
 ]
 
+
 class LogWindow():
-    def __init__(self, window: QTextEdit):
+    def __init__(self, window: QTextBrowser):
         self.display_data = []
         self.text_window = window
         self.auto_scroll = False
@@ -32,16 +33,20 @@ class LogWindow():
         #    self.ScrollToEnd()
 
     # @Event
-    def SetAutoScrollFlg(self, flg: bool)->None:
+    def SetAutoScrollFlg(self, flg: bool) -> None:
         self.auto_scroll = flg
 
     def ScrollToEnd(self) -> None:
         scroll = self.text_window.verticalScrollBar()
         scroll.setValue(scroll.maximum())
 
-    def ChangeLogType(self, type: int)->None:
+    def ChangeLogType(self, type: int) -> None:
         print(type)
 
     def Clear(self) -> None:
         self.display_data.clear()
-        self.table_widget.clear()
+        self.text_window.clear()
+
+    def ShowDisplayLogFromLogData(self, log_data: list):
+        for log in log_data:
+            self.AppendDataToWindow(log)

@@ -97,7 +97,7 @@
      <string>Search</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="LogView">
+   <widget class="QTextBrowser" name="LogView">
     <property name="geometry">
      <rect>
       <x>280</x>

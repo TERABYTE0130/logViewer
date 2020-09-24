@@ -1,4 +1,3 @@
-from PySide2.QtWidgets import QFileDialog
 import json
 
 class SessionLog():
@@ -11,10 +10,10 @@ class SessionLog():
     def Clear(self):
         self.log_data.clear()
 
-    def SaveSettion(self):
-        save_file = QFileDialog.getSaveFileName(None,"save as","*.log")
+    def SaveToFile(self, path: str):
         data = json.dumps(self.log_data)
-        fw = open(save_file[0],"w")
-        json.dump(data,fw)
+        fw = open(path, "w")
+        json.dump(data, fw)
 
-
+    def SetSessionData(self,load_data):
+        self.log_data = load_data

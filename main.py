@@ -1,7 +1,8 @@
 import sys
 import os.path
+import json
 from PySide2 import QtWidgets
-from PySide2.QtWidgets import QMessageBox, QMenu
+from PySide2.QtWidgets import QMessageBox, QMenu, QFileDialog
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtNetwork import (QHostAddress)
 
@@ -48,7 +49,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.BeginLogServer(SERVER_IP, SERVER_PORT)
 
     def CreateMenuBar(self) -> None:
-        self.menu_file.addAction("Save as", self.session_log.SaveSettion)
+        self.menu_file.addAction("Save as", self.SaveSessionLog)
+        self.menu_file.addAction("Load", self.LoadFromFile)
 
     def RegisterLogEventToDispatcher(self) -> None:
         # recv log
@@ -69,6 +71,19 @@ class MainWindow(QtWidgets.QMainWindow):
             QMessageBox.critical("logserver", "unable to start server")
             self.server.close()
             return
+
+    def SaveSessionLog(self):
+        path = QFileDialog.getSaveFileName(None, "save as", "*.log")
+        self.session_log.SaveToFile(path[0])
+
+    def LoadFromFile(self):
+        path = QFileDialog.getOpenFileName(None, "load log...", None, "*.log")
+        fp = open(path[0],'r')
+        log_str = json.load(fp)
+        data = json.loads(log_str)
+        self.session_log.SetSessionData(data)
+        self.log_view.Clear()
+        self.log_view.ShowDisplayLogFromLogData(data)
 
 
 if __name__ == "__main__":
