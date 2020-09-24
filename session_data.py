@@ -11,7 +11,7 @@ class SessionLog():
     def Clear(self):
         self.log_data.clear()
 
-    def Savesettion(self):
+    def SaveSettion(self):
         save_file = QFileDialog.getSaveFileName(None,"save as","*.log")
         data = json.dumps(self.log_data)
         fw = open(save_file[0],"w")

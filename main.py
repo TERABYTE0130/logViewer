@@ -27,35 +27,48 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "window", "log_window.ui"))
         self.setCentralWidget(self.ui)
 
+        # session log
+        self.session_log = session_data.SessionLog()
 
-def BeginLogServer(server, address, port) -> None:
-    print("begin listen ", (address.toString()))
-    if not server.listen(address, port):
-        QMessageBox.critical("logserver", "unable to start server")
-        server.close()
-        return
+        # server
+        self.server = log_server.Server()
+        # log view
+        self.log_view = log_window.LogWindow(self.ui.LogView)
+        self.log_filter_utility = log_filter_box.LogFilterBox(self.ui.AutoScrollBox, self.ui.TypeFilterBox)
 
+        # session connect state view
+        self.connect_view = connect_state.ConnectState(self.ui.ConnectView)
 
-def RegisterLogEventToDispatcher(session_log: session_data.SessionLog,
-                                 log_view: log_window.LogWindow,
-                                 log_filter_utility: log_filter_box.LogFilterBox) -> None:
-    # recv log
-    event_dispatcher.AddEvent(event_key.RECV_LOG, session_log.Add)
-    event_dispatcher.AddEvent(event_key.RECV_LOG, log_view.AppendDataToWindow)
-    # auto acroll
-    event_dispatcher.AddEvent(event_key.AUTO_SCROLL_LOG, log_view.SetAutoScrollFlg)
-    # change type filter
-    event_dispatcher.AddEvent(event_key.TYPE_FILER_CHANGED, log_view.ChangeLogType)
+        self.menu_file = self.ui.menuFile
 
+        self.CreateMenuBar()
+        self.RegisterLogEventToDispatcher()
+        self.RegisterConnectEvent()
 
-def RegisterConnectEvent(connect_view: connect_state.ConnectState):
-    event_dispatcher.AddEvent(event_key.CONNECT_CLIENT, connect_view.ConnectClient)
-    event_dispatcher.AddEvent(event_key.DISCONNECT_CLIENT, connect_view.DisconnectClient)
+        self.BeginLogServer(SERVER_IP, SERVER_PORT)
 
-def CreateMenuBar(
-        file_menu_bar: QMenu,
-        session_log: session_data.SessionLog):
-    file_menu_bar.addAction("Save as", session_log.Savesettion)
+    def CreateMenuBar(self) -> None:
+        self.menu_file.addAction("Save as", self.session_log.SaveSettion)
+
+    def RegisterLogEventToDispatcher(self) -> None:
+        # recv log
+        event_dispatcher.AddEvent(event_key.RECV_LOG, self.session_log.Add)
+        event_dispatcher.AddEvent(event_key.RECV_LOG, self.log_view.AppendDataToWindow)
+        # auto acroll
+        event_dispatcher.AddEvent(event_key.AUTO_SCROLL_LOG, self.log_view.SetAutoScrollFlg)
+        # change type filter
+        event_dispatcher.AddEvent(event_key.TYPE_FILER_CHANGED, self.log_view.ChangeLogType)
+
+    def RegisterConnectEvent(self):
+        event_dispatcher.AddEvent(event_key.CONNECT_CLIENT, self.connect_view.ConnectClient)
+        event_dispatcher.AddEvent(event_key.DISCONNECT_CLIENT, self.connect_view.DisconnectClient)
+
+    def BeginLogServer(self, address, port) -> None:
+        print("begin listen ", (address.toString()))
+        if not self.server.listen(address, port):
+            QMessageBox.critical("logserver", "unable to start server")
+            self.server.close()
+            return
 
 
 if __name__ == "__main__":
@@ -66,26 +79,6 @@ if __name__ == "__main__":
     window = MainWindow()
     # apply material design
     # apply_stylesheet(app, theme="dark_blue.xml")
-
-    # session log
-    session_log = session_data.SessionLog()
-    server = log_server.Server()
-    BeginLogServer(server, SERVER_IP, SERVER_PORT)
-
-    # log view
-    log_view = log_window.LogWindow(window.ui.LogView)
-    log_filter_utility = log_filter_box.LogFilterBox(
-        window.ui.AutoScrollBox,
-        window.ui.TypeFilterBox)
-
-    # session connect state view
-    connect_view = connect_state.ConnectState(window.ui.ConnectView)
-
-    file_menu = window.ui.menuFile
-    CreateMenuBar(file_menu, session_log)
-
-    RegisterLogEventToDispatcher(session_log, log_view, log_filter_utility)
-    RegisterConnectEvent(connect_view)
     # execute app
     window.show()
     sys.exit(app.exec_())
