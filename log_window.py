@@ -2,9 +2,9 @@ from PySide2.QtWidgets import QTextBrowser
 import json
 
 _LOG_TYPE = [
-    "[  INFO  ]",
-    "[  WARNING  ]",
-    "[  ERROR  ]"
+    "[    INFO     ]",
+    "[   WARNING   ]",
+    "[    ERROR     ]"
 ]
 
 

@@ -29,13 +29,13 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTreeView" name="CategoryView">
+   <widget class="QListWidget" name="CategoryView">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
+      <y>150</y>
       <width>231</width>
-      <height>461</height>
+      <height>341</height>
      </rect>
     </property>
     <property name="font">
@@ -47,9 +47,9 @@
    <widget class="QComboBox" name="TypeFilterBox">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>30</y>
-      <width>101</width>
+      <x>250</x>
+      <y>40</y>
+      <width>131</width>
       <height>21</height>
      </rect>
     </property>
@@ -78,7 +78,7 @@
     <property name="geometry">
      <rect>
       <x>390</x>
-      <y>30</y>
+      <y>40</y>
       <width>381</width>
       <height>21</height>
      </rect>
@@ -88,8 +88,8 @@
     <property name="geometry">
      <rect>
       <x>780</x>
-      <y>30</y>
-      <width>141</width>
+      <y>40</y>
+      <width>171</width>
       <height>21</height>
      </rect>
     </property>
@@ -100,10 +100,10 @@
    <widget class="QTextBrowser" name="LogView">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>90</y>
-      <width>641</width>
-      <height>401</height>
+      <x>250</x>
+      <y>80</y>
+      <width>701</width>
+      <height>411</height>
      </rect>
     </property>
     <property name="verticalScrollBarPolicy">
@@ -113,7 +113,7 @@
    <widget class="QCheckBox" name="AutoScrollBox">
     <property name="geometry">
      <rect>
-      <x>850</x>
+      <x>870</x>
       <y>60</y>
       <width>81</width>
       <height>21</height>
@@ -126,7 +126,7 @@
    <widget class="QLabel" name="ConnectView">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>250</x>
       <y>60</y>
       <width>91</width>
       <height>21</height>
@@ -134,6 +134,29 @@
     </property>
     <property name="text">
      <string>wait connect...</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="CategoryFilter">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>231</width>
+      <height>71</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear</string>
     </property>
    </widget>
   </widget>
