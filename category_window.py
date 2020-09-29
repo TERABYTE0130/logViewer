@@ -11,7 +11,7 @@ class CategoryWindow():
         self.listwindow.itemDoubleClicked.connect(self.SelectCategory)
         self.category_list = []
 
-    def RecvLog(self, log):
+    def recv_log(self, log):
         if not self.IsContain(log["category"]):
             self.AddCategory(log["category"])
 

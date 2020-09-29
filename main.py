@@ -47,56 +47,56 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.menu_file = self.ui.menuFile
 
-        self.CreateMenuBar()
-        self.RegisterLogEventToDispatcher()
-        self.RegisterConnectEvent()
+        self.create_menu_bar()
+        self.register_log_event_to_dispatcher()
+        self.register_connect_event()
 
-        self.BeginLogServer(SERVER_IP, SERVER_PORT)
+        self.begin_log_server(SERVER_IP, SERVER_PORT)
 
-    def CreateMenuBar(self) -> None:
-        self.menu_file.addAction("Save as", self.SaveSessionLog)
-        self.menu_file.addAction("Load", self.LoadFromFile)
+    def create_menu_bar(self) -> None:
+        self.menu_file.addAction("Save as", self.save_session_log)
+        self.menu_file.addAction("Load", self.load_from_file)
 
-    def RegisterLogEventToDispatcher(self) -> None:
+    def register_log_event_to_dispatcher(self) -> None:
         # recv log
-        event_dispatcher.AddEvent(event_key.RECV_LOG, self.session_log.Add)
-        event_dispatcher.AddEvent(event_key.RECV_LOG, self.log_view.AppendDataToWindow)
-        event_dispatcher.AddEvent(event_key.RECV_LOG, self.category_view.RecvLog)
+        event_dispatcher.add_event(event_key.RECV_LOG, self.session_log.Add)
+        event_dispatcher.add_event(event_key.RECV_LOG, self.log_view.append_data_to_window)
+        event_dispatcher.add_event(event_key.RECV_LOG, self.category_view.recv_log)
 
         # auto acroll
-        event_dispatcher.AddEvent(event_key.AUTO_SCROLL_LOG, self.log_view.SetAutoScrollFlg)
+        event_dispatcher.add_event(event_key.AUTO_SCROLL_LOG, self.log_view.set_auto_scroll_flg)
         # change type filter
-        event_dispatcher.AddEvent(event_key.TYPE_FILER_CHANGED, self.log_view.ChangeLogType)
+        event_dispatcher.add_event(event_key.TYPE_FILER_CHANGED, self.log_view.change_log_type)
 
-    def RegisterConnectEvent(self):
-        event_dispatcher.AddEvent(event_key.CONNECT_CLIENT, self.connect_view.ConnectClient)
-        event_dispatcher.AddEvent(event_key.DISCONNECT_CLIENT, self.connect_view.DisconnectClient)
+    def register_connect_event(self):
+        event_dispatcher.add_event(event_key.CONNECT_CLIENT, self.connect_view.connect_client)
+        event_dispatcher.add_event(event_key.DISCONNECT_CLIENT, self.connect_view.disconnect_client)
 
-    def BeginLogServer(self, address, port) -> None:
+    def begin_log_server(self, address, port) -> None:
         print("begin listen ", (address.toString()))
         if not self.server.listen(address, port):
             QMessageBox.critical("logserver", "unable to start server")
             self.server.close()
             return
 
-    def SaveSessionLog(self):
+    def save_session_log(self):
         path = QFileDialog.getSaveFileName(None, "save as", "*.log")
         self.session_log.SaveToFile(path[0])
 
-    def LoadFromFile(self):
+    def load_from_file(self):
         path = QFileDialog.getOpenFileName(None, "load log...", None, "*.log")
         fp = open(path[0],'r')
         log_str = json.load(fp)
         data = json.loads(log_str)
         self.session_log.SetSessionData(data)
-        self.log_view.Clear()
-        self.log_view.ShowDisplayLogFromLogData(data)
+        self.log_view.clear()
+        self.log_view.show_display_log_from_log_data(data)
 
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     # init event dispatcher
-    event_dispatcher.StartupDispatcher()
+    event_dispatcher.startup_dispatcher()
 
     window = MainWindow()
     # apply material design

@@ -8,17 +8,17 @@ class Server(QTcpServer):
     def __init__(self):
         super(Server, self).__init__()
         self.socket = QTcpSocket()
-        self.socket.readyRead.connect(self.ReadRecvData)
-        self.socket.disconnected.connect(self.DisconnectSocket)
+        self.socket.readyRead.connect(self.read_recv_data)
+        self.socket.disconnected.connect(self.disconnect_socket)
 
-    def ReadRecvData(self):
+    def read_recv_data(self):
         data = self.socket.readAll()
         utf_str = data.data().decode()
         #format to json
         json_data = json.loads(utf_str)
         event_dispatcher.EmitEvent(event_key.RECV_LOG, json_data)
 
-    def DisconnectSocket(self):
+    def disconnect_socket(self):
         event_dispatcher.EmitEvent(event_key.DISCONNECT_CLIENT, "null")
 
     def incomingConnection(self, socket_desc):

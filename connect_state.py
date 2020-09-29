@@ -10,10 +10,10 @@ class ConnectState():
         self.connect_label = label
         self.connect_label.setText(self.current_text)
 
-    def ConnectClient(self, arg):
+    def connect_client(self, arg):
         self.current_text = _CONNECT_TEXT
         self.connect_label.setText(self.current_text)
 
-    def DisconnectClient(self, arg):
+    def disconnect_client(self, arg):
         self.current_text = _WAIT_CONNECT_TEXT
         self.connect_label.setText(self.current_text)

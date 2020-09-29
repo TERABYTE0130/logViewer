@@ -19,7 +19,7 @@ class LogWindow():
     #    self.table_widget.horizontalHeader().setStretchLastSection(True)
 
     # @Event
-    def AppendDataToWindow(self, json_data) -> None:
+    def append_data_to_window(self, json_data) -> None:
         # convert dict from json string
 
         format_text = "{}  {}  [ {} ]  {}".format(
@@ -30,23 +30,23 @@ class LogWindow():
         self.display_data.append(format_text)
         self.text_window.append(format_text)
         # if self.auto_scroll:
-        #    self.ScrollToEnd()
+        #    self.scroll_to_end()
 
     # @Event
-    def SetAutoScrollFlg(self, flg: bool) -> None:
+    def set_auto_scroll_flg(self, flg: bool) -> None:
         self.auto_scroll = flg
 
-    def ScrollToEnd(self) -> None:
+    def scroll_to_end(self) -> None:
         scroll = self.text_window.verticalScrollBar()
         scroll.setValue(scroll.maximum())
 
-    def ChangeLogType(self, type: int) -> None:
-        print(type)
+    def change_log_type(self, type_no: int) -> None:
+        print(type_no)
 
-    def Clear(self) -> None:
+    def clear(self) -> None:
         self.display_data.clear()
         self.text_window.clear()
 
-    def ShowDisplayLogFromLogData(self, log_data: list):
+    def show_display_log_from_log_data(self, log_data: list):
         for log in log_data:
-            self.AppendDataToWindow(log)
+            self.append_data_to_window(log)
