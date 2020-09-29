@@ -10,11 +10,13 @@ from pyside_material import apply_stylesheet
 
 import log_server
 import log_window
+import category_window
 import log_filter_box
 import event_dispatcher
 import event_key
 import connect_state
 import session_data
+
 
 CURRENT_PATH = os.path.dirname(os.path.join(os.path.abspath(sys.argv[0])))
 SERVER_IP = QHostAddress(QHostAddress.LocalHost)
@@ -37,6 +39,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.log_view = log_window.LogWindow(self.ui.LogView)
         self.log_filter_utility = log_filter_box.LogFilterBox(self.ui.AutoScrollBox, self.ui.TypeFilterBox)
 
+        # category view
+        self.category_view = category_window.CategoryWindow(self.ui.CategoryView)
+
         # session connect state view
         self.connect_view = connect_state.ConnectState(self.ui.ConnectView)
 
@@ -56,6 +61,8 @@ class MainWindow(QtWidgets.QMainWindow):
         # recv log
         event_dispatcher.AddEvent(event_key.RECV_LOG, self.session_log.Add)
         event_dispatcher.AddEvent(event_key.RECV_LOG, self.log_view.AppendDataToWindow)
+        event_dispatcher.AddEvent(event_key.RECV_LOG, self.category_view.RecvLog)
+
         # auto acroll
         event_dispatcher.AddEvent(event_key.AUTO_SCROLL_LOG, self.log_view.SetAutoScrollFlg)
         # change type filter

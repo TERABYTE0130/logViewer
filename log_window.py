@@ -2,9 +2,9 @@ from PySide2.QtWidgets import QTextBrowser
 import json
 
 _LOG_TYPE = [
-    "[    INFO     ]",
-    "[   WARNING   ]",
-    "[    ERROR     ]"
+    "[INFO]",
+    "[WARNING]",
+    "[ERROR]"
 ]
 
 
@@ -22,7 +22,7 @@ class LogWindow():
     def AppendDataToWindow(self, json_data) -> None:
         # convert dict from json string
 
-        format_text = "{} | {} | {} | {}".format(
+        format_text = "{}  {}  [ {} ]  {}".format(
             json_data["timestamp"],
             _LOG_TYPE[json_data["loglevel"]],
             json_data["category"],
