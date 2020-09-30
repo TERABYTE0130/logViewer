@@ -10,15 +10,15 @@ class CategoryWindow():
         self.list_window.itemDoubleClicked.connect(self.select_category)
         self.category_list = []
 
-    def recv_log(self, log):
+    def receive_log(self, log):
         if not self.is_contain(log["category"]):
             self.add_category(log["category"])
 
         # self.category_list.append(log)
 
-    def add_category(self, data):
-        self.category_list.append(data)
-        self.list_window.addItem(data)
+    def add_category(self, category):
+        self.category_list.append(category)
+        self.list_window.addItem(category)
 
     def is_contain(self, category: str) -> bool:
         return True if category in self.category_list else False
@@ -29,4 +29,4 @@ class CategoryWindow():
 
     def select_category(self, item: QListWidgetItem):
         select_category = item.text()
-        # event_dispatcher.EmitEvent(event_key.SELECT_LOG_CATEGORY)
+        event_dispatcher.EmitEvent(event_key.ADD_LOG_CATEGORY_FILTER, select_category)

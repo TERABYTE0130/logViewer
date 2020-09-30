@@ -16,7 +16,7 @@ import event_dispatcher
 import event_key
 import connect_state
 import session_data
-
+import category_apply_window
 
 CURRENT_PATH = os.path.dirname(os.path.join(os.path.abspath(sys.argv[0])))
 SERVER_IP = QHostAddress(QHostAddress.LocalHost)
@@ -27,7 +27,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         # load window
-        self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "window", "log_window.ui"))
+        self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "window", "log_window_next.ui"))
         self.setCentralWidget(self.ui)
 
         # session log
@@ -41,6 +41,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # category view
         self.category_view = category_window.CategoryWindow(self.ui.CategoryView)
+        self.category_apply_view = category_apply_window.CategoryApplyWindow(self.ui.CategoryFilter)
 
         # session connect state view
         self.connect_view = connect_state.ConnectState(self.ui.ConnectView)
@@ -61,7 +62,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # recv log
         event_dispatcher.add_event(event_key.RECV_LOG, self.session_log.Add)
         event_dispatcher.add_event(event_key.RECV_LOG, self.log_view.append_data_to_window)
-        event_dispatcher.add_event(event_key.RECV_LOG, self.category_view.recv_log)
+        event_dispatcher.add_event(event_key.RECV_LOG, self.category_view.receive_log)
 
         # auto acroll
         event_dispatcher.add_event(event_key.AUTO_SCROLL_LOG, self.log_view.set_auto_scroll_flg)
@@ -85,7 +86,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def load_from_file(self):
         path = QFileDialog.getOpenFileName(None, "load log...", None, "*.log")
-        fp = open(path[0],'r')
+        fp = open(path[0], 'r')
         log_str = json.load(fp)
         data = json.loads(log_str)
         self.session_log.SetSessionData(data)
@@ -100,7 +101,7 @@ if __name__ == "__main__":
 
     window = MainWindow()
     # apply material design
-    # apply_stylesheet(app, theme="dark_blue.xml")
+    apply_stylesheet(app, theme="dark_cyan.xml")
     # execute app
     window.show()
     sys.exit(app.exec_())
