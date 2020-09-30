@@ -4,17 +4,18 @@ import event_dispatcher
 import event_key
 import json
 
+
 class Server(QTcpServer):
     def __init__(self):
         super(Server, self).__init__()
         self.socket = QTcpSocket()
-        self.socket.readyRead.connect(self.read_recv_data)
+        self.socket.readyRead.connect(self.read_receive_data)
         self.socket.disconnected.connect(self.disconnect_socket)
 
-    def read_recv_data(self):
+    def read_receive_data(self):
         data = self.socket.readAll()
         utf_str = data.data().decode()
-        #format to json
+        # format to json
         json_data = json.loads(utf_str)
         event_dispatcher.EmitEvent(event_key.RECV_LOG, json_data)
 

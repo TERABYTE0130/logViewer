@@ -1,5 +1,4 @@
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QListWidget,QListWidgetItem
+from PySide2.QtWidgets import QListWidget, QListWidgetItem
 
 import event_dispatcher
 import event_key
@@ -7,27 +6,27 @@ import event_key
 
 class CategoryWindow():
     def __init__(self, window: QListWidget):
-        self.listwindow = window
-        self.listwindow.itemDoubleClicked.connect(self.SelectCategory)
+        self.list_window = window
+        self.list_window.itemDoubleClicked.connect(self.select_category)
         self.category_list = []
 
     def recv_log(self, log):
-        if not self.IsContain(log["category"]):
-            self.AddCategory(log["category"])
+        if not self.is_contain(log["category"]):
+            self.add_category(log["category"])
 
         # self.category_list.append(log)
 
-    def AddCategory(self, data):
+    def add_category(self, data):
         self.category_list.append(data)
-        self.listwindow.addItem(data)
+        self.list_window.addItem(data)
 
-    def IsContain(self, category: str) -> bool:
+    def is_contain(self, category: str) -> bool:
         return True if category in self.category_list else False
 
-    def Clear(self):
+    def clear(self):
         self.category_list.clear()
-        self.listwindow.clear()
+        self.list_window.clear()
 
-    def SelectCategory(self, item: QListWidgetItem):
+    def select_category(self, item: QListWidgetItem):
         select_category = item.text()
         # event_dispatcher.EmitEvent(event_key.SELECT_LOG_CATEGORY)
