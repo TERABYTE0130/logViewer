@@ -1,11 +1,10 @@
 import sys
 import os.path
 import json
-from PySide2 import QtWidgets
+from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QMessageBox, QMenu, QFileDialog
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtNetwork import (QHostAddress)
-
 from pyside_material import apply_stylesheet
 
 import log_server
@@ -96,6 +95,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    QtCore.QCoreApplication.setApplicationName("LogViewer")
     # init event dispatcher
     event_dispatcher.startup_dispatcher()
 
