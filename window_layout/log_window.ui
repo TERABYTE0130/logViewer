@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>960</width>
+    <height>750</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>960</width>
+    <height>750</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>2000</width>
+    <height>2000</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="0" rowspan="3">
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QListWidget" name="CategoryView">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+       </font>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0" rowspan="2">
+     <widget class="QListWidget" name="CategoryFilter"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="ConnectView">
+      <property name="text">
+       <string>wait connect...</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QCheckBox" name="AutoScrollBox">
+      <property name="text">
+       <string>auto scroll</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1" rowspan="3" colspan="3">
+     <widget class="QTextBrowser" name="LogView">
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" rowspan="3">
+     <widget class="QComboBox" name="TypeFilterBox">
+      <item>
+       <property name="text">
+        <string>all</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>info</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>warning</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>error</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="2" column="2" rowspan="3">
+     <widget class="QLineEdit" name="SearchBox"/>
+    </item>
+    <item row="3" column="3">
+     <widget class="QPushButton" name="SearchButton">
+      <property name="text">
+       <string>Search</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>960</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <action name="actionSave_Log">
+   <property name="text">
+    <string>Save as</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

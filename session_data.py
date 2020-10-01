@@ -5,16 +5,16 @@ class SessionLog():
     def __init__(self):
         self.log_data = []
 
-    def Add(self, data: list):
+    def add(self, data: list):
         self.log_data.extend(data)
 
-    def Clear(self):
+    def clear(self):
         self.log_data.clear()
 
-    def SaveToFile(self, path: str):
+    def save_to_file(self, path: str):
         data = json.dumps(self.log_data)
         fw = open(path, "w")
         json.dump(data, fw)
 
-    def SetSessionData(self, load_data: list):
+    def set_session_data(self, load_data: list):
         self.log_data = load_data

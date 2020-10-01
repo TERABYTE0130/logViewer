@@ -26,7 +26,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         # load window
-        self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "window", "log_window_next.ui"))
+        self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "window_layout", "log_window.ui"))
         self.setCentralWidget(self.ui)
 
         # session log
@@ -55,11 +55,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def create_menu_bar(self) -> None:
         self.menu_file.addAction("Save as", self.save_session_log)
-        self.menu_file.addAction("Load", self.load_from_file)
+        self.menu_file.addAction("Load", self.load_log_session)
 
     def register_log_event_to_dispatcher(self) -> None:
         # recv log
-        event_dispatcher.add_event(event_key.RECV_LOG, self.session_log.Add)
+        event_dispatcher.add_event(event_key.RECV_LOG, self.session_log.add)
         event_dispatcher.add_event(event_key.RECV_LOG, self.log_view.append_data_to_window)
         event_dispatcher.add_event(event_key.RECV_LOG, self.category_view.receive_log)
 
@@ -81,16 +81,29 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def save_session_log(self):
         path = QFileDialog.getSaveFileName(None, "save as", "*.log")
-        self.session_log.SaveToFile(path[0])
+        self.session_log.save_to_file(path[0])
 
-    def load_from_file(self):
-        path = QFileDialog.getOpenFileName(None, "load log...", None, "*.log")
-        fp = open(path[0], 'r')
+    def load_log_session(self):
+        file_path = QFileDialog.getOpenFileName(None, "load log...", None, "*.log")
+        if not os.path.exists(file_path[0]):
+            print("failed log path {}".format(file_path[0]))
+            return
+        self.clear_filter()
+        self.load_session_from_file(file_path[0])
+
+    def load_session_from_file(self, file_path):
+        fp = open(file_path, 'r')
         log_str = json.load(fp)
         data = json.loads(log_str)
-        self.session_log.SetSessionData(data)
+        self.session_log.clear()
+        self.session_log.set_session_data(data)
         self.log_view.clear()
         self.log_view.append_data_to_window(data)
+        self.category_view.receive_log(data)
+
+    def clear_filter(self):
+        self.category_view.clear()
+        self.category_apply_view.clear()
 
 
 if __name__ == "__main__":
@@ -101,7 +114,7 @@ if __name__ == "__main__":
 
     window = MainWindow()
     # apply material design
-    apply_stylesheet(app, theme="dark_cyan.xml")
+    apply_stylesheet(app, theme="dark_teal.xml")
     # execute app
     window.show()
     sys.exit(app.exec_())
