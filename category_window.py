@@ -10,11 +10,10 @@ class CategoryWindow():
         self.list_window.itemDoubleClicked.connect(self.select_category)
         self.category_list = []
 
-    def receive_log(self, log):
-        if not self.is_contain(log["category"]):
-            self.add_category(log["category"])
-
-        # self.category_list.append(log)
+    def receive_log(self, log_list: list):
+        for log in log_list:
+            if not self.is_contain(log["category"]):
+                self.add_category(log["category"])
 
     def add_category(self, category):
         self.category_list.append(category)

@@ -19,16 +19,17 @@ class LogWindow():
     #    self.table_widget.horizontalHeader().setStretchLastSection(True)
 
     # @Event
-    def append_data_to_window(self, json_data) -> None:
+    def append_data_to_window(self, log_list: list) -> None:
         # convert dict from json string
+        for json_data in log_list:
+            format_text = "{}  {}  [ {} ]  {}".format(
+                json_data["timestamp"],
+                _LOG_TYPE[json_data["loglevel"]],
+                json_data["category"],
+                json_data["message"])
+            self.display_data.append(format_text)
+            self.text_window.append(format_text)
 
-        format_text = "{}  {}  [ {} ]  {}".format(
-            json_data["timestamp"],
-            _LOG_TYPE[json_data["loglevel"]],
-            json_data["category"],
-            json_data["message"])
-        self.display_data.append(format_text)
-        self.text_window.append(format_text)
         # if self.auto_scroll:
         #    self.scroll_to_end()
 
@@ -47,6 +48,3 @@ class LogWindow():
         self.display_data.clear()
         self.text_window.clear()
 
-    def show_display_log_from_log_data(self, log_data: list):
-        for log in log_data:
-            self.append_data_to_window(log)

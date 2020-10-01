@@ -91,7 +91,7 @@ class MainWindow(QtWidgets.QMainWindow):
         data = json.loads(log_str)
         self.session_log.SetSessionData(data)
         self.log_view.clear()
-        self.log_view.show_display_log_from_log_data(data)
+        self.log_view.append_data_to_window(data)
 
 
 if __name__ == "__main__":

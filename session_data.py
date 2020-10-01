@@ -1,11 +1,12 @@
 import json
 
+
 class SessionLog():
     def __init__(self):
         self.log_data = []
 
-    def Add(self, data):
-        self.log_data.append(data)
+    def Add(self, data: list):
+        self.log_data.extend(data)
 
     def Clear(self):
         self.log_data.clear()
@@ -15,5 +16,5 @@ class SessionLog():
         fw = open(path, "w")
         json.dump(data, fw)
 
-    def SetSessionData(self,load_data):
+    def SetSessionData(self, load_data: list):
         self.log_data = load_data
