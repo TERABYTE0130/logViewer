@@ -28,4 +28,4 @@ class CategoryWindow:
 
     def select_category(self, item: QListWidgetItem):
         select_category = item.text()
-        event_dispatcher.EmitEvent(event_key.CATEGORY_FILTER_CHANGED, select_category)
+        event_dispatcher.emit_event(event_key.SELECT_CATEGORY_FILTER_ITEM, select_category)

@@ -43,5 +43,5 @@ def delete_event(key: str, event):
     dispatcher.delete_event(key, event)
 
 
-def EmitEvent(key: str, arg_data):
+def emit_event(key: str, arg_data):
     dispatcher.call(key, arg_data)

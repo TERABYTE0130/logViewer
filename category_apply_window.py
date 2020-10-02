@@ -23,8 +23,8 @@ class CategoryApplyWindow:
             self.list_window.takeItem(row)
         # dispatch
         dispatch_data = copy.deepcopy(self.current_filter)
-        event_dispatcher.EmitEvent(event_key.SEND_CATEGORY_FILTER, dispatch_data)
-        event_dispatcher.EmitEvent(event_key.LOG_FILTERING, None)
+        event_dispatcher.emit_event(event_key.SEND_CATEGORY_FILTER, dispatch_data)
+        event_dispatcher.emit_event(event_key.LOG_FILTERING, None)
 
     def clear(self):
         self.current_filter.clear()
@@ -39,5 +39,5 @@ class CategoryApplyWindow:
             self.add(category)
             # dispatch
             dispatch_data = copy.deepcopy(self.current_filter)
-            event_dispatcher.EmitEvent(event_key.SEND_CATEGORY_FILTER, dispatch_data)
-            event_dispatcher.EmitEvent(event_key.LOG_FILTERING, None)
+            event_dispatcher.emit_event(event_key.SEND_CATEGORY_FILTER, dispatch_data)
+            event_dispatcher.emit_event(event_key.LOG_FILTERING, None)

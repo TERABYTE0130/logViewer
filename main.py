@@ -2,7 +2,7 @@ import sys
 import os.path
 import json
 from PySide2 import QtWidgets, QtCore
-from PySide2.QtWidgets import QMessageBox, QMenu, QFileDialog
+from PySide2.QtWidgets import QMessageBox, QFileDialog
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtNetwork import (QHostAddress)
 from pyside_material import apply_stylesheet
@@ -16,6 +16,7 @@ import event_key
 import connect_state
 import session_data
 import category_apply_window
+import text_filter
 
 CURRENT_PATH = os.path.dirname(os.path.join(os.path.abspath(sys.argv[0])))
 SERVER_IP = QHostAddress(QHostAddress.LocalHost)
@@ -41,6 +42,9 @@ class MainWindow(QtWidgets.QMainWindow):
         # category view
         self.category_view = category_window.CategoryWindow(self.ui.CategoryView)
         self.category_apply_view = category_apply_window.CategoryApplyWindow(self.ui.CategoryFilter)
+
+        # search box
+        self.text_filter_edit = text_filter.text_filter_edit(self.ui.TextFilterEdit)
 
         # session connect state view
         self.connect_view = connect_state.ConnectState(self.ui.ConnectView)
@@ -71,9 +75,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def register_filter_log_event(self):
         event_dispatcher.add_event(event_key.LOG_FILTERING, self.filter_log)
-        event_dispatcher.add_event(event_key.CATEGORY_FILTER_CHANGED, self.category_apply_view.receive_add_filter_event)
-        event_dispatcher.add_event(event_key.TYPE_FILER_CHANGED, self.log_view.set_log_type)
+        event_dispatcher.add_event(event_key.SELECT_CATEGORY_FILTER_ITEM, self.category_apply_view.receive_add_filter_event)
+        event_dispatcher.add_event(event_key.SEND_TYPE_FILTER, self.log_view.set_log_type)
         event_dispatcher.add_event(event_key.SEND_CATEGORY_FILTER, self.log_view.set_category_filter)
+        event_dispatcher.add_event(event_key.SEND_TEXT_FILTER,self.log_view.set_text_filter)
 
     def register_connect_event(self):
         event_dispatcher.add_event(event_key.CONNECT_CLIENT, self.connect_view.connect_client)

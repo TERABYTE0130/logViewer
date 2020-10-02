@@ -35,12 +35,21 @@ def log_filter(src: list, log_type: LogType, log_category: list):
     return filter(filter_func, src)
 
 
+def filter_text(format_text: str, search_text: str):
+    if len(search_text) == 0:
+        return True
+    if search_text in format_text:
+        return True
+    return False
+
+
 class LogWindow:
     def __init__(self, window: QTextBrowser):
         self.text_window = window
         self.auto_scroll = False
         self.log_type = LogType.ALL
         self.log_category = []
+        self.text_filter = ""
         # self.AdjustWindowSize()
 
     # def AdjustWindowSize(self):
@@ -48,14 +57,16 @@ class LogWindow:
 
     # @Event
     def append_data_to_window(self, log_list: list) -> None:
-        filter_list = log_filter(log_list, self.log_type, self.log_category)
-        for json_data in filter_list:
+        filtering_list = log_filter(log_list, self.log_type, self.log_category)
+        for json_data in filtering_list:
             format_text = "{}  {}  [ {} ]  {}".format(
                 json_data["timestamp"],
                 _LOG_TYPE[json_data["loglevel"]],
                 json_data["category"],
                 json_data["message"])
-            self.text_window.append(format_text)
+            # textのフィルタリングのみformat後に行う
+            if filter_text(format_text, self.text_filter):
+                self.text_window.append(format_text)
 
         # if self.auto_scroll:
         #    self.scroll_to_end()
@@ -71,6 +82,10 @@ class LogWindow:
     # @Event
     def set_category_filter(self, category_list: list):
         self.log_category = category_list
+
+    # @Event
+    def set_text_filter(self, text: str):
+        self.text_filter = text
 
     def scroll_to_end(self) -> None:
         scroll = self.text_window.verticalScrollBar()

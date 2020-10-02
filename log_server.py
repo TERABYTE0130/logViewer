@@ -17,14 +17,14 @@ class Server(QTcpServer):
         utf_str = data.data().decode()
         # format to json
         json_data = json.loads(utf_str)
-        event_dispatcher.EmitEvent(event_key.RECV_LOG, json_data)
+        event_dispatcher.emit_event(event_key.RECV_LOG, json_data)
 
     def disconnect_socket(self):
-        event_dispatcher.EmitEvent(event_key.DISCONNECT_CLIENT, "null")
+        event_dispatcher.emit_event(event_key.DISCONNECT_CLIENT, "null")
 
     def incomingConnection(self, socket_desc):
         if not self.socket.setSocketDescriptor(socket_desc):
             self.error.emit(self.socket.error())
             print("faild create socket")
             return
-        event_dispatcher.EmitEvent(event_key.CONNECT_CLIENT, "null")
+        event_dispatcher.emit_event(event_key.CONNECT_CLIENT, "null")

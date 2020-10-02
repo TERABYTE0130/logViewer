@@ -30,14 +30,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="0" rowspan="3">
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>Clear</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="0">
+    <item row="6" column="0">
      <widget class="QListWidget" name="CategoryView">
       <property name="font">
        <font>
@@ -46,34 +39,10 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="0" rowspan="2">
-     <widget class="QListWidget" name="CategoryFilter"/>
+    <item row="2" column="2" rowspan="2">
+     <widget class="QLineEdit" name="TextFilterEdit"/>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="ConnectView">
-      <property name="text">
-       <string>wait connect...</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QCheckBox" name="AutoScrollBox">
-      <property name="text">
-       <string>auto scroll</string>
-      </property>
-      <property name="checked">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1" rowspan="3" colspan="3">
-     <widget class="QTextBrowser" name="LogView">
-      <property name="verticalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOn</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1" rowspan="3">
+    <item row="2" column="1" rowspan="2">
      <widget class="QComboBox" name="TypeFilterBox">
       <item>
        <property name="text">
@@ -97,13 +66,37 @@
       </item>
      </widget>
     </item>
-    <item row="2" column="2" rowspan="3">
-     <widget class="QLineEdit" name="SearchBox"/>
-    </item>
-    <item row="3" column="3">
-     <widget class="QPushButton" name="SearchButton">
+    <item row="1" column="0">
+     <widget class="QLabel" name="ConnectView">
       <property name="text">
-       <string>Search</string>
+       <string>wait connect...</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1" rowspan="3" colspan="3">
+     <widget class="QTextBrowser" name="LogView">
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" rowspan="2">
+     <widget class="QPushButton" name="ClearFilterButton">
+      <property name="text">
+       <string>Clear Filter</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" rowspan="2">
+     <widget class="QListWidget" name="CategoryFilter"/>
+    </item>
+    <item row="2" column="3" rowspan="2">
+     <widget class="QCheckBox" name="AutoScrollBox">
+      <property name="text">
+       <string>auto scroll</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
