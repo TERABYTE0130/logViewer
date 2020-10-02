@@ -1,3 +1,9 @@
+#python
+__pycache__/
+*.py[cod]
+*$py.class
+
+
 #pycharm
 *.xml
 
@@ -32,3 +38,4 @@ pip-selfcheck.json
 __pycache__/
 
 *.log
+/venv
