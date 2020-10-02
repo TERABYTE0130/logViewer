@@ -47,10 +47,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.menu_file = self.ui.menuFile
 
+        #create menu
         self.create_menu_bar()
+
+        #connect dispatch event
         self.register_log_event_to_dispatcher()
         self.register_connect_event()
-
+        self.register_filter_log_event()
         self.begin_log_server(SERVER_IP, SERVER_PORT)
 
     def create_menu_bar(self) -> None:
@@ -65,10 +68,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # auto acroll
         event_dispatcher.add_event(event_key.AUTO_SCROLL_LOG, self.log_view.set_auto_scroll_flg)
-        # change type filter
-        event_dispatcher.add_event(event_key.TYPE_FILER_CHANGED, self.log_view.change_log_type)
-        # filter event
+
+    def register_filter_log_event(self):
         event_dispatcher.add_event(event_key.LOG_FILTERING, self.filter_log)
+        event_dispatcher.add_event(event_key.CATEGORY_FILTER_CHANGED, self.category_apply_view.receive_add_filter_event)
+        event_dispatcher.add_event(event_key.TYPE_FILER_CHANGED, self.log_view.set_log_type)
+        event_dispatcher.add_event(event_key.SEND_CATEGORY_FILTER, self.log_view.set_category_filter)
 
     def register_connect_event(self):
         event_dispatcher.add_event(event_key.CONNECT_CLIENT, self.connect_view.connect_client)

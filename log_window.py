@@ -64,12 +64,17 @@ class LogWindow:
     def set_auto_scroll_flg(self, flg: bool) -> None:
         self.auto_scroll = flg
 
+    # @Event
+    def set_log_type(self, type_no: int) -> None:
+        self.log_type = type_no - 1
+
+    # @Event
+    def set_category_filter(self, category_list: list):
+        self.log_category = category_list
+
     def scroll_to_end(self) -> None:
         scroll = self.text_window.verticalScrollBar()
         scroll.setValue(scroll.maximum())
-
-    def change_log_type(self, type_no: int) -> None:
-        self.log_type = type_no - 1
 
     def clear(self) -> None:
         self.text_window.clear()
