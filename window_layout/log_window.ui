@@ -117,7 +117,13 @@
      <string>File</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuTool">
+    <property name="title">
+     <string>Tool</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuTool"/>
   </widget>
   <action name="actionSave_Log">
    <property name="text">

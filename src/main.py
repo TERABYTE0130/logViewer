@@ -42,9 +42,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.connect_view = connect_state.ConnectState(self.ui.ConnectView)
 
         self.menu_file = self.ui.menuFile
+        self.menu_tool = self.ui.menuTool
 
         #create menu
         self.create_menu_bar()
+        self.create_tool_bar()
 
         #connect dispatch event
         self.register_log_event_to_dispatcher()
@@ -55,6 +57,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def create_menu_bar(self) -> None:
         self.menu_file.addAction("Save as", self.save_session_log)
         self.menu_file.addAction("Load", self.load_log_session)
+
+    def create_tool_bar(self):
+        self.menu_tool.addAction("Clear Session", self.clear_session)
 
     def register_log_event_to_dispatcher(self) -> None:
         # recv log
@@ -82,6 +87,12 @@ class MainWindow(QtWidgets.QMainWindow):
             QMessageBox.critical("logserver", "unable to start server")
             self.server.close()
             return
+
+    def clear_session(self):
+        self.session_log.clear()
+        self.log_view.clear()
+        self.category_view.clear()
+        self.category_apply_view.clear()
 
     def save_session_log(self):
         path = QFileDialog.getSaveFileName(None, "save as", "*.log")
