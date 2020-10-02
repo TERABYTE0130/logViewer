@@ -1,19 +1,28 @@
-from PySide2.QtWidgets import QLabel
+from PySide2.QtWidgets import QRadioButton
 
 _WAIT_CONNECT_TEXT = "wait connect .."
 _CONNECT_TEXT = "connect client!"
 
 
 class ConnectState:
-    def __init__(self, label: QLabel):
-        self.current_text = _WAIT_CONNECT_TEXT
-        self.connect_label = label
-        self.connect_label.setText(self.current_text)
+    def __init__(self, button: QRadioButton):
+        self.connect_state_button = button
+        self.is_connected = False
+        self.connect_state_button.setChecked(self.is_connected)
+        self.connect_state_button.setText(_WAIT_CONNECT_TEXT)
+        self.connect_state_button.clicked.connect(self.disable_user_click)
 
     def connect_client(self, arg):
-        self.current_text = _CONNECT_TEXT
-        self.connect_label.setText(self.current_text)
+        self.connect_state_button.setText(_CONNECT_TEXT)
+        self.is_connected = True
+        self.connect_state_button.setChecked(self.is_connected)
+
 
     def disconnect_client(self, arg):
-        self.current_text = _WAIT_CONNECT_TEXT
-        self.connect_label.setText(self.current_text)
+        self.connect_state_button.setText(_WAIT_CONNECT_TEXT)
+        self.is_connected = False
+        self.connect_state_button.setChecked(self.is_connected)
+
+
+    def disable_user_click(self):
+        self.connect_state_button.setChecked(self.is_connected)

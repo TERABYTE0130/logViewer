@@ -30,17 +30,18 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="6" column="0">
-     <widget class="QListWidget" name="CategoryView">
-      <property name="font">
-       <font>
-        <family>Segoe UI</family>
-       </font>
+    <item row="4" column="0" rowspan="2">
+     <widget class="QListWidget" name="CategoryFilter"/>
+    </item>
+    <item row="2" column="3" rowspan="2">
+     <widget class="QCheckBox" name="AutoScrollBox">
+      <property name="text">
+       <string>auto scroll</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
      </widget>
-    </item>
-    <item row="2" column="2" rowspan="2">
-     <widget class="QLineEdit" name="TextFilterEdit"/>
     </item>
     <item row="2" column="1" rowspan="2">
      <widget class="QComboBox" name="TypeFilterBox">
@@ -66,10 +67,10 @@
       </item>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="ConnectView">
+    <item row="2" column="0" rowspan="2">
+     <widget class="QPushButton" name="ClearFilterButton">
       <property name="text">
-       <string>wait connect...</string>
+       <string>Clear Filter</string>
       </property>
      </widget>
     </item>
@@ -80,23 +81,28 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0" rowspan="2">
-     <widget class="QPushButton" name="ClearFilterButton">
-      <property name="text">
-       <string>Clear Filter</string>
+    <item row="6" column="0">
+     <widget class="QListWidget" name="CategoryView">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+       </font>
       </property>
      </widget>
     </item>
-    <item row="4" column="0" rowspan="2">
-     <widget class="QListWidget" name="CategoryFilter"/>
+    <item row="2" column="2" rowspan="2">
+     <widget class="QLineEdit" name="TextFilterEdit"/>
     </item>
-    <item row="2" column="3" rowspan="2">
-     <widget class="QCheckBox" name="AutoScrollBox">
+    <item row="1" column="0">
+     <widget class="QRadioButton" name="ConnectState">
       <property name="text">
-       <string>auto scroll</string>
+       <string>wait connect...</string>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
       </property>
       <property name="checked">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
      </widget>
     </item>

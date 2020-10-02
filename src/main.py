@@ -39,7 +39,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.text_filter_edit = text_filter.text_filter_edit(self.ui.TextFilterEdit)
 
         # session connect state view
-        self.connect_view = connect_state.ConnectState(self.ui.ConnectView)
+        self.connect_view = connect_state.ConnectState(self.ui.ConnectState)
 
         self.menu_file = self.ui.menuFile
         self.menu_tool = self.ui.menuTool
