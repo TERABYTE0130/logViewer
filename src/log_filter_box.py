@@ -1,7 +1,6 @@
 from PySide2.QtWidgets import QCheckBox, QComboBox
 
-import event_dispatcher
-import event_key
+from src import event_key, event_dispatcher
 
 
 class LogFilterBox:

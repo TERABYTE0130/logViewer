@@ -7,16 +7,8 @@ from PySide2.QtUiTools import QUiLoader
 from PySide2.QtNetwork import (QHostAddress)
 from pyside_material import apply_stylesheet
 
-import log_server
-import log_window
-import category_window
-import log_filter_box
-import event_dispatcher
-import event_key
-import connect_state
-import session_data
-import category_apply_window
-import text_filter
+from src import text_filter, log_window, session_data, log_filter_box, event_key, connect_state, event_dispatcher, \
+    category_apply_window, category_window, log_server
 
 CURRENT_PATH = os.path.dirname(os.path.join(os.path.abspath(sys.argv[0])))
 SERVER_IP = QHostAddress(QHostAddress.LocalHost)
@@ -27,7 +19,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         # load window
-        self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "window_layout", "log_window.ui"))
+        self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "../window_layout", "log_window.ui"))
         self.setCentralWidget(self.ui)
 
         # session log
@@ -78,7 +70,7 @@ class MainWindow(QtWidgets.QMainWindow):
         event_dispatcher.add_event(event_key.SELECT_CATEGORY_FILTER_ITEM, self.category_apply_view.receive_add_filter_event)
         event_dispatcher.add_event(event_key.SEND_TYPE_FILTER, self.log_view.set_log_type)
         event_dispatcher.add_event(event_key.SEND_CATEGORY_FILTER, self.log_view.set_category_filter)
-        event_dispatcher.add_event(event_key.SEND_TEXT_FILTER,self.log_view.set_text_filter)
+        event_dispatcher.add_event(event_key.SEND_TEXT_FILTER, self.log_view.set_text_filter)
 
     def register_connect_event(self):
         event_dispatcher.add_event(event_key.CONNECT_CLIENT, self.connect_view.connect_client)

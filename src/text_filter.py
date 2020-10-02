@@ -1,7 +1,6 @@
 from PySide2.QtWidgets import QLineEdit
 
-import event_key
-import event_dispatcher
+from src import event_key, event_dispatcher
 
 
 class text_filter_edit:

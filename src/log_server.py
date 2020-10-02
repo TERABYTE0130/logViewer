@@ -1,7 +1,6 @@
 from PySide2.QtNetwork import (QTcpServer, QTcpSocket)
 
-import event_dispatcher
-import event_key
+from src import event_key, event_dispatcher
 import json
 
 
