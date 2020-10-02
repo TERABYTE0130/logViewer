@@ -35,7 +35,7 @@ def log_filter(src: list, log_type: LogType, log_category: list):
     return filter(filter_func, src)
 
 
-class LogWindow():
+class LogWindow:
     def __init__(self, window: QTextBrowser):
         self.text_window = window
         self.auto_scroll = False

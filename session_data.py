@@ -2,7 +2,7 @@ import json
 import copy
 
 
-class SessionLog():
+class SessionLog:
     def __init__(self):
         self.log_data = []
 

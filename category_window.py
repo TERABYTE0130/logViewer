@@ -4,7 +4,7 @@ import event_dispatcher
 import event_key
 
 
-class CategoryWindow():
+class CategoryWindow:
     def __init__(self, window: QListWidget):
         self.list_window = window
         self.list_window.itemDoubleClicked.connect(self.select_category)

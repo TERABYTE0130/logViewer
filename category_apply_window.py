@@ -4,7 +4,7 @@ import event_dispatcher
 import event_key
 
 
-class CategoryApplyWindow():
+class CategoryApplyWindow:
     def __init__(self, window: QListWidget):
         self.list_window = window
         self.current_filter = []

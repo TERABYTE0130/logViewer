@@ -108,12 +108,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.category_apply_view.clear()
 
     def filter_log(self, dummy):
-        session_data = self.session_log.get_session_data()
-        if len(session_data) == 0:
-            "not session data"
+        session_log = self.session_log.get_session_data()
+        if len(session_log) == 0:
+            print("not session data")
             return
         self.log_view.clear()
-        self.log_view.append_data_to_window(session_data)
+        self.log_view.append_data_to_window(session_log)
 
 
 if __name__ == "__main__":

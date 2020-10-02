@@ -4,7 +4,7 @@ import event_dispatcher
 import event_key
 
 
-class LogFilterBox():
+class LogFilterBox:
     def __init__(self, checkbox: QCheckBox, combo_box: QComboBox):
         self.auto_scroll_checkbox = checkbox
         self.auto_scroll_checkbox.stateChanged.connect(self.clicked_auto_scroll_box)

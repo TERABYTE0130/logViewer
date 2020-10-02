@@ -1,4 +1,4 @@
-class EventDispatcher():
+class EventDispatcher:
     def __init__(self):
         self.__action_events = {}
 
