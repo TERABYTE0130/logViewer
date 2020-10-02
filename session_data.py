@@ -1,4 +1,5 @@
 import json
+import copy
 
 
 class SessionLog():
@@ -18,3 +19,7 @@ class SessionLog():
 
     def set_session_data(self, load_data: list):
         self.log_data = load_data
+
+    def get_session_data(self):
+        # TODO 重くなってきたら参照にするか別の手段にする
+        return copy.deepcopy(self.log_data)

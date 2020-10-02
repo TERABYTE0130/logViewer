@@ -67,6 +67,8 @@ class MainWindow(QtWidgets.QMainWindow):
         event_dispatcher.add_event(event_key.AUTO_SCROLL_LOG, self.log_view.set_auto_scroll_flg)
         # change type filter
         event_dispatcher.add_event(event_key.TYPE_FILER_CHANGED, self.log_view.change_log_type)
+        # filter event
+        event_dispatcher.add_event(event_key.LOG_FILTERING, self.filter_log)
 
     def register_connect_event(self):
         event_dispatcher.add_event(event_key.CONNECT_CLIENT, self.connect_view.connect_client)
@@ -104,6 +106,14 @@ class MainWindow(QtWidgets.QMainWindow):
     def clear_filter(self):
         self.category_view.clear()
         self.category_apply_view.clear()
+
+    def filter_log(self, dummy):
+        session_data = self.session_log.get_session_data()
+        if len(session_data) == 0:
+            "not session data"
+            return
+        self.log_view.clear()
+        self.log_view.append_data_to_window(session_data)
 
 
 if __name__ == "__main__":

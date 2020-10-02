@@ -16,28 +16,27 @@ class LogType(IntEnum):
 
 
 def log_filter(src: list, log_type: LogType, log_category: list):
-    def filter_function(data):
+    def filter_type(data):
         if log_type == LogType.ALL:
-            if len(log_category) == 0:
-                return True
-            if data["category"] in log_category:
-                return True
-            return False
+            return True
+        return True if log_type == data["loglevel"] else False
 
-        if data["loglevel"] == LogType:
-            if len(log_category) == 0:
+    def filter_category(data):
+        if len(log_category) == 0:
+            return True
+        return True if data["category"] in log_category else False
+
+    def filter_func(data):
+        if filter_type(data):
+            if filter_category(data):
                 return True
-            if data["category"] in log_category:
-                return True
-            return False
         return False
 
-    return filter(filter_function, src)
+    return filter(filter_func, src)
 
 
 class LogWindow():
     def __init__(self, window: QTextBrowser):
-        self.display_data = []
         self.text_window = window
         self.auto_scroll = False
         self.log_type = LogType.ALL
@@ -49,15 +48,13 @@ class LogWindow():
 
     # @Event
     def append_data_to_window(self, log_list: list) -> None:
-        filter_list = log_filter(log_list,self.log_type,self.log_category)
-
+        filter_list = log_filter(log_list, self.log_type, self.log_category)
         for json_data in filter_list:
             format_text = "{}  {}  [ {} ]  {}".format(
                 json_data["timestamp"],
                 _LOG_TYPE[json_data["loglevel"]],
                 json_data["category"],
                 json_data["message"])
-            self.display_data.append(format_text)
             self.text_window.append(format_text)
 
         # if self.auto_scroll:
@@ -75,5 +72,4 @@ class LogWindow():
         self.log_type = type_no - 1
 
     def clear(self) -> None:
-        self.display_data.clear()
         self.text_window.clear()
