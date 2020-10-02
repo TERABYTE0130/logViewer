@@ -1,5 +1,5 @@
 from PySide2.QtWidgets import QTextBrowser
-import json
+from enum import IntEnum
 
 _LOG_TYPE = [
     "[INFO]",
@@ -8,11 +8,40 @@ _LOG_TYPE = [
 ]
 
 
+class LogType(IntEnum):
+    ALL = -1
+    INFO = 0
+    WARNING = 1
+    ERROR = 2
+
+
+def log_filter(src: list, log_type: LogType, log_category: list):
+    def filter_function(data):
+        if log_type == LogType.ALL:
+            if len(log_category) == 0:
+                return True
+            if data["category"] in log_category:
+                return True
+            return False
+
+        if data["loglevel"] == LogType:
+            if len(log_category) == 0:
+                return True
+            if data["category"] in log_category:
+                return True
+            return False
+        return False
+
+    return filter(filter_function, src)
+
+
 class LogWindow():
     def __init__(self, window: QTextBrowser):
         self.display_data = []
         self.text_window = window
         self.auto_scroll = False
+        self.log_type = LogType.ALL
+        self.log_category = []
         # self.AdjustWindowSize()
 
     # def AdjustWindowSize(self):
@@ -20,8 +49,9 @@ class LogWindow():
 
     # @Event
     def append_data_to_window(self, log_list: list) -> None:
-        # convert dict from json string
-        for json_data in log_list:
+        filter_list = log_filter(log_list,self.log_type,self.log_category)
+
+        for json_data in filter_list:
             format_text = "{}  {}  [ {} ]  {}".format(
                 json_data["timestamp"],
                 _LOG_TYPE[json_data["loglevel"]],
@@ -42,9 +72,8 @@ class LogWindow():
         scroll.setValue(scroll.maximum())
 
     def change_log_type(self, type_no: int) -> None:
-        print(type_no)
+        self.log_type = type_no - 1
 
     def clear(self) -> None:
         self.display_data.clear()
         self.text_window.clear()
-
