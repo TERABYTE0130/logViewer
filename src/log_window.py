@@ -1,4 +1,4 @@
-from PySide2.QtWidgets import QTextBrowser
+from PySide2.QtWidgets import QTextBrowser, QCheckBox
 from enum import IntEnum
 
 _LOG_TYPE = [
@@ -44,12 +44,15 @@ def filter_text(format_text: str, search_text: str):
 
 
 class LogWindow:
-    def __init__(self, window: QTextBrowser):
+    def __init__(self, window: QTextBrowser,checkbox: QCheckBox):
         self.text_window = window
-        self.auto_scroll = False
         self.log_type = LogType.ALL
         self.log_category = []
         self.text_filter = ""
+
+        self.auto_scroll_checkbox = checkbox
+        self.auto_scroll_checkbox.stateChanged.connect(self.clicked_auto_scroll_box)
+        self.is_auto_scroll = True
         # self.AdjustWindowSize()
 
     # def AdjustWindowSize(self):
@@ -68,12 +71,8 @@ class LogWindow:
             if filter_text(format_text, self.text_filter):
                 self.text_window.append(format_text)
 
-        # if self.auto_scroll:
+        # if self.is_auto_scroll:
         #    self.scroll_to_end()
-
-    # @Event
-    def set_auto_scroll_flg(self, flg: bool) -> None:
-        self.auto_scroll = flg
 
     # @Event
     def set_log_type(self, type_no: int) -> None:
@@ -93,3 +92,7 @@ class LogWindow:
 
     def clear(self) -> None:
         self.text_window.clear()
+
+    def clicked_auto_scroll_box(self, state: int):
+        self.is_auto_scroll = True if (state > 0) else False
+

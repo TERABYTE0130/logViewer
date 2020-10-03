@@ -62,7 +62,7 @@
     <item row="7" column="0">
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Category</string>
+       <string>Category(double click to add)</string>
       </property>
      </widget>
     </item>
@@ -120,7 +120,7 @@
     <item row="4" column="0">
      <widget class="QLabel" name="label_2">
       <property name="text">
-       <string>Apply</string>
+       <string>Category Filter</string>
       </property>
      </widget>
     </item>

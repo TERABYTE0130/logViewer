@@ -7,7 +7,7 @@ from PySide2.QtUiTools import QUiLoader
 from PySide2.QtNetwork import (QHostAddress)
 from pyside_material import apply_stylesheet
 
-from src import text_filter, log_window, session_data, log_filter_box, event_key, connect_state, event_dispatcher, \
+from src import text_filter, log_window, session_data, type_filter, event_key, connect_state, event_dispatcher, \
     category_apply_window, category_window, log_server
 
 CURRENT_PATH = os.path.dirname(os.path.join(os.path.abspath(sys.argv[0])))
@@ -28,8 +28,8 @@ class MainWindow(QtWidgets.QMainWindow):
         # server
         self.server = log_server.Server()
         # log view
-        self.log_view = log_window.LogWindow(self.ui.LogView)
-        self.log_filter_utility = log_filter_box.LogFilterBox(self.ui.AutoScrollBox, self.ui.TypeFilterBox)
+        self.log_view = log_window.LogWindow(self.ui.LogView,self.ui.AutoScrollBox)
+        self.log_filter_utility = type_filter.TypeFilter(self.ui.TypeFilterBox)
 
         # category view
         self.category_view = category_window.CategoryWindow(self.ui.CategoryView)
@@ -67,9 +67,6 @@ class MainWindow(QtWidgets.QMainWindow):
         event_dispatcher.add_event(event_key.RECV_LOG, self.session_log.add)
         event_dispatcher.add_event(event_key.RECV_LOG, self.log_view.append_data_to_window)
         event_dispatcher.add_event(event_key.RECV_LOG, self.category_view.receive_log)
-
-        # auto acroll
-        event_dispatcher.add_event(event_key.AUTO_SCROLL_LOG, self.log_view.set_auto_scroll_flg)
 
     def register_filter_log_event(self):
         event_dispatcher.add_event(event_key.LOG_FILTERING,
