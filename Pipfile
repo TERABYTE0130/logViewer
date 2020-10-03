@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+mypy = "==0.782"
+mypy-extensions = "==0.4.3"
+pyside-material = "==1.14"
+shiboken2 = "==5.15.0"
+typed-ast = "==1.4.1"
+typing-extensions = "==3.7.4.3"
+Jinja2 = "==2.11.2"
+MarkupSafe = "==1.1.1"
+PySide2 = "==5.15.0"
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+start = "python main.py"
