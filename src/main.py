@@ -33,7 +33,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # category view
         self.category_view = category_window.CategoryWindow(self.ui.CategoryView)
-        self.category_apply_view = category_apply_window.CategoryApplyWindow(self.ui.CategoryFilter)
+        self.category_apply_view = category_apply_window.CategoryApplyWindow(self.ui.CategoryFilter,
+                                                                             self.ui.ClearFilterButton)
 
         # search box
         self.text_filter_edit = text_filter.text_filter_edit(self.ui.TextFilterEdit)
@@ -44,11 +45,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.menu_file = self.ui.menuFile
         self.menu_tool = self.ui.menuTool
 
-        #create menu
+        # create menu
         self.create_menu_bar()
         self.create_tool_bar()
 
-        #connect dispatch event
+        # connect dispatch event
         self.register_log_event_to_dispatcher()
         self.register_connect_event()
         self.register_filter_log_event()
@@ -71,11 +72,16 @@ class MainWindow(QtWidgets.QMainWindow):
         event_dispatcher.add_event(event_key.AUTO_SCROLL_LOG, self.log_view.set_auto_scroll_flg)
 
     def register_filter_log_event(self):
-        event_dispatcher.add_event(event_key.LOG_FILTERING, self.filter_log)
-        event_dispatcher.add_event(event_key.SELECT_CATEGORY_FILTER_ITEM, self.category_apply_view.receive_add_filter_event)
-        event_dispatcher.add_event(event_key.SEND_TYPE_FILTER, self.log_view.set_log_type)
-        event_dispatcher.add_event(event_key.SEND_CATEGORY_FILTER, self.log_view.set_category_filter)
-        event_dispatcher.add_event(event_key.SEND_TEXT_FILTER, self.log_view.set_text_filter)
+        event_dispatcher.add_event(event_key.LOG_FILTERING,
+                                   self.filter_log)
+        event_dispatcher.add_event(event_key.SELECT_CATEGORY_FILTER_ITEM,
+                                   self.category_apply_view.receive_add_filter_event)
+        event_dispatcher.add_event(event_key.SEND_TYPE_FILTER,
+                                   self.log_view.set_log_type)
+        event_dispatcher.add_event(event_key.SEND_CATEGORY_FILTER,
+                                   self.log_view.set_category_filter)
+        event_dispatcher.add_event(event_key.SEND_TEXT_FILTER,
+                                   self.log_view.set_text_filter)
 
     def register_connect_event(self):
         event_dispatcher.add_event(event_key.CONNECT_CLIENT, self.connect_view.connect_client)

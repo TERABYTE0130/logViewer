@@ -1,7 +1,7 @@
 from PySide2.QtWidgets import QRadioButton
 
 _WAIT_CONNECT_TEXT = "wait connect .."
-_CONNECT_TEXT = "connect client!"
+_CONNECT_TEXT = "connect app"
 
 
 class ConnectState:
