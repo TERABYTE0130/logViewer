@@ -1,6 +1,7 @@
 import sys
 import os.path
 import json
+
 from PySide2 import QtWidgets, QtCore
 from PySide2.QtWidgets import QMessageBox, QFileDialog
 from PySide2.QtUiTools import QUiLoader
@@ -19,7 +20,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
         # load window
-        self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "../window_layout", "log_window.ui"))
+        self.ui = QUiLoader().load(os.path.join(CURRENT_PATH, "window_layout", "log_window.ui"))
         self.setCentralWidget(self.ui)
 
         # session log
@@ -28,7 +29,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # server
         self.server = log_server.Server()
         # log view
-        self.log_view = log_window.LogWindow(self.ui.LogView,self.ui.AutoScrollBox)
+        self.log_view = log_window.LogWindow(self.ui.LogView, self.ui.AutoScrollBox)
         self.log_filter_utility = type_filter.TypeFilter(self.ui.TypeFilterBox)
 
         # category view
