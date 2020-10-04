@@ -1,0 +1,3 @@
+# logViewer
+
+realtime logging viewer 
